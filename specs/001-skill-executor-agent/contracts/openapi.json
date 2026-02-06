@@ -1,0 +1,62 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "Skill Executor Agent API",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/skills/register": {
+      "post": {
+        "summary": "Register a skill from GitHub",
+        "parameters": [
+          { "name": "url", "in": "query", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "201": { "description": "Skill registered successfully" },
+          "403": { "description": "Security risk detected" }
+        }
+      }
+    },
+    "/skills/{id}/sync": {
+      "post": {
+        "summary": "Manually sync a skill from its GitHub source",
+        "parameters": [
+          { "name": "id", "in": "path", "required": true, "schema": { "type": "string" } }
+        ],
+        "responses": {
+          "200": { "description": "Skill synced successfully" },
+          "403": { "description": "Security risk detected during re-scan" }
+        }
+      }
+    },
+    "/skills/execute": {
+      "post": {
+        "summary": "Execute a skill based on query",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "query": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Execution successful" },
+          "404": { "description": "No matching skill found (low confidence)" }
+        }
+      }
+    },
+    "/skills": {
+      "get": {
+        "summary": "List all skills",
+        "responses": {
+          "200": { "description": "Success" }
+        }
+      }
+    }
+  }
+}

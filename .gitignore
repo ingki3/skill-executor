@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+dist/
+*.egg-info/
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Node.js
+node_modules/
+dist/
+build/
+coverage/
+.npm
+*.log
+
+# Environment Variables
+.env
+.env.*
+!.env.example
+
+# Editor/IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Docker
+.dockerignore
+
+# Project Specific
+.skills/

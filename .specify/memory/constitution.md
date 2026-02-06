@@ -1,50 +1,63 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report:
+- Version change: [CONSTITUTION_VERSION] → 1.0.0
+- Modified principles:
+    - [PRINCIPLE_1_NAME] → I. Modern Python Backend (uv + Python 3.12)
+    - [PRINCIPLE_2_NAME] → II. React Frontend (Node.js + Tailwind CSS)
+    - [PRINCIPLE_3_NAME] → III. Dockerized Testing & Deployment
+    - [PRINCIPLE_4_NAME] → IV. Secure Skill Registration
+    - [PRINCIPLE_5_NAME] → V. Adaptive Execution & Observability
+- Added sections: Technology Stack, Development Workflow
+- Removed sections: N/A
+- Templates requiring updates:
+    - .specify/templates/plan-template.md (✅ updated)
+    - .specify/templates/tasks-template.md (✅ updated)
+- Follow-up TODOs: None
+-->
+
+# Skill Executor Agent Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Modern Python Backend
+The backend MUST use Python 3.12. All package management, dependency resolution, and environment isolation MUST be handled by `uv`. No other environment managers (e.g., conda, poetry) are permitted.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. React Frontend
+The frontend MUST be built using Node.js, React, and Tailwind CSS. Modern UI/UX principles, specifically Material Design, SHOULD be followed to ensure a professional and functional admin interface.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Dockerized Testing & Deployment (NON-NEGOTIABLE)
+All development, testing, and production environments MUST be defined via Docker. Every implementation MUST be validated within a Docker container to ensure environment parity and reproducible test results.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Secure Skill Registration
+Security is the primary constraint. Every skill registration MUST undergo an automated risk analysis (scanning for PII theft, malicious code, and dangerous system operations) before being accepted into the registry.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Adaptive Execution & Observability
+The system MUST intelligently route execution requests between Lightweight (e.g., Gemini Flash) and Advanced (e.g., Gemini Pro) LLMs based on skill metadata. Full traceability of the execution loop (especially for ReACT patterns) is mandatory for observability.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+## Technology Stack
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+### Backend
+- **Language**: Python 3.12
+- **Manager**: `uv`
+- **Framework**: FastAPI (preferred for async AI operations)
+- **Vector DB**: FAISS
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### Frontend
+- **Runtime**: Node.js
+- **Framework**: React (with TypeScript)
+- **Styling**: Tailwind CSS
+- **Package Manager**: npm
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Development Workflow
+
+### Testing Discipline
+1. **Docker-First**: All tests must be runnable inside a Docker image.
+2. **Contract Testing**: Any changes to the API contracts between frontend and backend must be verified via contract tests.
+3. **Security Scans**: Registration logic MUST include security check unit tests.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+- This constitution supersedes all other development practices in the Skill Executor Agent project.
+- Amendments require a version bump (Semantic Versioning) and a Sync Impact Report.
+- All Pull Requests must be verified against these principles.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2026-02-06 | **Last Amended**: 2026-02-06

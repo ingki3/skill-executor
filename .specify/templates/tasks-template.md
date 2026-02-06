@@ -20,10 +20,9 @@ description: "Task list template for feature implementation"
 
 ## Path Conventions
 
-- **Single project**: `src/`, `tests/` at repository root
 - **Web app**: `backend/src/`, `frontend/src/`
-- **Mobile**: `api/src/`, `ios/src/` or `android/src/`
-- Paths shown below assume single project - adjust based on plan.md structure
+- **Tests**: `backend/tests/`, `frontend/tests/` (Docker-based)
+- **Docker**: `docker/`
 
 <!-- 
   ============================================================================
@@ -48,9 +47,11 @@ description: "Task list template for feature implementation"
 
 **Purpose**: Project initialization and basic structure
 
-- [ ] T001 Create project structure per implementation plan
-- [ ] T002 Initialize [language] project with [framework] dependencies
-- [ ] T003 [P] Configure linting and formatting tools
+- [ ] T001 Create project structure (backend/, frontend/, docker/)
+- [ ] T002 Initialize backend with `uv init` and install FastAPI
+- [ ] T003 Initialize frontend with `npm init` and install React + Tailwind CSS
+- [ ] T004 Create Dockerfiles and docker-compose.yml
+- [ ] T005 [P] Configure linting and formatting (ruff for python, eslint/prettier for react)
 
 ---
 
@@ -60,14 +61,10 @@ description: "Task list template for feature implementation"
 
 **⚠️ CRITICAL**: No user story work can begin until this phase is complete
 
-Examples of foundational tasks (adjust based on your project):
-
-- [ ] T004 Setup database schema and migrations framework
-- [ ] T005 [P] Implement authentication/authorization framework
-- [ ] T006 [P] Setup API routing and middleware structure
-- [ ] T007 Create base models/entities that all stories depend on
-- [ ] T008 Configure error handling and logging infrastructure
-- [ ] T009 Setup environment configuration management
+- [ ] T006 Setup FAISS vector store and local skill registry (.skills/)
+- [ ] T007 Implement basic security scan logic for skill registration
+- [ ] T008 [P] Setup API routing (FastAPI) and frontend service layers
+- [ ] T009 Configure environment variables and LLM endpoints
 
 **Checkpoint**: Foundation ready - user story implementation can now begin in parallel
 
