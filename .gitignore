@@ -37,3 +37,6 @@ Thumbs.db
 
 # Project Specific
 .skills/
+.gemini/
+.specify/
+tests/
