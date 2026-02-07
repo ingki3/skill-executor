@@ -1,6 +1,6 @@
 import React from 'react';
 import { Card, CardContent, Typography, Button, Box, Chip } from '@mui/material';
-import { Skill } from '../services/api';
+import type { Skill } from '../services/api';
 import SyncIcon from '@mui/icons-material/Sync';
 import DeleteIcon from '@mui/icons-material/Delete';
 import PlayArrowIcon from '@mui/icons-material/PlayArrow';
@@ -20,10 +20,10 @@ export const SkillCard: React.FC<SkillCardProps> = ({ skill, onSync, onDelete, o
           <Typography variant="h5" component="div">
             {skill.name}
           </Typography>
-          <Chip 
-            label={skill.complexity} 
-            color={skill.complexity === 'COMPLEX' ? 'secondary' : 'primary'} 
-            size="small" 
+          <Chip
+            label={skill.complexity}
+            color={skill.complexity === 'COMPLEX' ? 'secondary' : 'primary'}
+            size="small"
           />
         </Box>
         <Typography sx={{ mb: 1.5 }} color="text.secondary">
@@ -33,26 +33,26 @@ export const SkillCard: React.FC<SkillCardProps> = ({ skill, onSync, onDelete, o
           {skill.description}
         </Typography>
         <Box display="flex" gap={1}>
-          <Button 
-            size="small" 
-            variant="contained" 
+          <Button
+            size="small"
+            variant="contained"
             startIcon={<PlayArrowIcon />}
             onClick={() => onExecute(skill)}
           >
             Run
           </Button>
-          <Button 
-            size="small" 
-            variant="outlined" 
+          <Button
+            size="small"
+            variant="outlined"
             startIcon={<SyncIcon />}
             onClick={() => onSync(skill.id)}
           >
             Sync
           </Button>
-          <Button 
-            size="small" 
-            variant="outlined" 
-            color="error" 
+          <Button
+            size="small"
+            variant="outlined"
+            color="error"
             startIcon={<DeleteIcon />}
             onClick={() => onDelete(skill.id)}
           >

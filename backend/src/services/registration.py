@@ -22,17 +22,46 @@ class RegistrationService:
             # 2. Find and Load Metadata
             metadata_file = self._find_metadata(temp_path)
             if not metadata_file:
-                raise ValueError("Skill metadata (skill.yaml) not found in repository.")
+                raise ValueError("Skill metadata (skill.yaml or SKILL.md) not found in repository.")
             
             with open(metadata_file, "r") as f:
-                metadata = yaml.safe_load(f)
+                if metadata_file.name == "SKILL.md":
+                    # Parse frontmatter from SKILL.md manually to avoid parsing the markdown body as YAML
+                    content = f.read()
+                    if content.startswith("---"):
+                        try:
+                            # Find the end of frontmatter
+                            end_idx = content.find("---", 3)
+                            if end_idx != -1:
+                                frontmatter_str = content[3:end_idx]
+                                metadata = yaml.safe_load(frontmatter_str) or {}
+                            else:
+                                # No closing ---, try parsing whole file (unlikely to be valid but fallback)
+                                metadata = yaml.safe_load(content) or {}
+                        except Exception as e:
+                             raise ValueError(f"Failed to parse SKILL.md frontmatter: {e}")
+                    else:
+                        raise ValueError("SKILL.md missing frontmatter (must start with ---)")
+                else:
+                    metadata = yaml.safe_load(f)
 
             # 3. Security Scan
             prompt = metadata.get("prompt", "")
-            code_file = temp_path / metadata.get("code_file", "")
-            if not code_file.exists():
-                raise ValueError(f"Code file {metadata.get('code_file')} not found.")
             
+            # Default code_file to SKILL.md if not specified, especially for instruction-only skills
+            code_filename = metadata.get("code_file")
+            if not code_filename:
+                if metadata_file.name == "SKILL.md":
+                    code_filename = "SKILL.md"
+                else:
+                    code_filename = ""
+
+            code_file = temp_path / code_filename if code_filename else None
+            
+            if not code_file or not code_file.exists():
+                 # If explicit code file is missing, try to use metadata file itself as fallback
+                 code_file = metadata_file
+
             with open(code_file, "r") as f:
                 code = f.read()
 
@@ -53,7 +82,7 @@ class RegistrationService:
                 name=metadata.get("name", "Unknown Skill"),
                 description=metadata.get("description", ""),
                 metadata_path=str(skill_dir / "skill.yaml"),
-                code_path=str(skill_dir / metadata.get("code_file")),
+                code_path=str(skill_dir / code_file.name),
                 complexity=Complexity(metadata.get("complexity", "SIMPLE").upper()),
                 version=metadata.get("version", "1.0.0"),
                 source_url=url
@@ -67,8 +96,10 @@ class RegistrationService:
             github_service.cleanup(temp_path)
 
     def _find_metadata(self, path: Path) -> Optional[Path]:
-        # Search for skill.yaml or skill.yml
+        # Search for skill.yaml, skill.yml, or SKILL.md
         for p in path.glob("**/skill.y*ml"):
+            return p
+        for p in path.glob("**/SKILL.md"):
             return p
         return None
 

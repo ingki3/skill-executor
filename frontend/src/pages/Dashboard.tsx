@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Container, Typography, Grid, Box, Button, TextField, Alert, CircularProgress } from '@mui/material';
-import { skillApi, Skill } from '../services/api';
+import { skillApi, type Skill } from '../services/api';
 import { SkillCard } from '../components/SkillCard';
 import AddIcon from '@mui/icons-material/Add';
 
@@ -29,7 +29,7 @@ export const Dashboard: React.FC = () => {
   const handleRegister = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!registerUrl) return;
-    
+
     setRegistering(true);
     setError(null);
     try {
@@ -80,12 +80,12 @@ export const Dashboard: React.FC = () => {
           variant="outlined"
           fullWidth
           value={registerUrl}
-          onChange={(e) => setRegisterUrl(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setRegisterUrl(e.target.value)}
           disabled={registering}
         />
-        <Button 
-          type="submit" 
-          variant="contained" 
+        <Button
+          type="submit"
+          variant="contained"
           startIcon={registering ? <CircularProgress size={20} color="inherit" /> : <AddIcon />}
           disabled={registering || !registerUrl}
           sx={{ minWidth: '150px' }}
@@ -103,17 +103,17 @@ export const Dashboard: React.FC = () => {
       ) : (
         <Grid container spacing={3}>
           {skills.map((skill) => (
-            <Grid item xs={12} sm={6} md={4} key={skill.id}>
-              <SkillCard 
-                skill={skill} 
-                onSync={handleSync} 
+            <Grid size={{ xs: 12, sm: 6, md: 4 }} key={skill.id}>
+              <SkillCard
+                skill={skill}
+                onSync={handleSync}
                 onDelete={handleDelete}
                 onExecute={handleExecute}
               />
             </Grid>
           ))}
           {skills.length === 0 && (
-            <Grid item xs={12}>
+            <Grid size={{ xs: 12 }}>
               <Typography variant="body1" textAlign="center" color="text.secondary">
                 No skills registered yet.
               </Typography>

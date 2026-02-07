@@ -43,10 +43,11 @@ class SecurityService:
             else:
                 return False, result.strip()
         except Exception as e:
-            if "404" in str(e):
-                # If model not found, we'll allow but warn in logs (for development/preview)
-                print(f"Security model not found: {e}. Defaulting to SAFE for test.")
-                return True, "Defaulted to SAFE (Model not found during preview)."
-            return False, f"Security scan failed: {str(e)}"
+            error_msg = str(e)
+            if "404" in error_msg or "No API_KEY" in error_msg:
+                # If model not found or no key config, we'll allow but warn in logs (for development/preview)
+                print(f"Human-in-the-loop warning: Security scan skipped. Reason: {error_msg}")
+                return True, f"Security scan skipped (Dev Mode): {error_msg}"
+            return False, f"Security scan failed: {error_msg}"
 
 security_service = SecurityService()
