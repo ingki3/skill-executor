@@ -1,25 +1,21 @@
 services:
-  backend:
+  app:
     build:
-      context: ./backend
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
+      - "3000:3000"
     environment:
-      - CORS_ORIGINS=http://localhost:3000
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
-    networks:
-      - app-network
+    volumes:
+      - ./.skills:/app/backend/.skills
+      - ./.skill-executor-data:/app/backend/.skill-executor-data
+      - ./.temp_skills:/app/backend/.temp_skills
+      - ./.pending_registrations:/app/backend/.pending_registrations
 
-  frontend:
-    build:
-      context: ./frontend
-    ports:
-      - "3000:80"
-    depends_on:
-      - backend
-    networks:
-      - app-network
-
-networks:
-  app-network:
-    driver: bridge
+volumes:
+  .skills:
+  .skill-executor-data:
+  .temp_skills:
+  .pending_registrations:

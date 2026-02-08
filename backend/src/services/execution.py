@@ -1,11 +1,19 @@
 import time
 import asyncio
+import os
 from typing import List, Optional
 from src.models import Skill, ExecutionLog, ExecutionOutcome, ReACTStep, Complexity
 from src.core.llm_clients import llm_clients
 from src.services.search import search_service
 
 class ExecutionService:
+    def verify_skill_paths(self, skill: Skill):
+        """Verify that skill files exist in the mounted volume."""
+        if not os.path.exists(skill.metadata_path):
+            raise FileNotFoundError(f"Metadata file not found: {skill.metadata_path}")
+        if not os.path.exists(skill.code_path):
+            raise FileNotFoundError(f"Code file not found: {skill.code_path}")
+
     async def execute_query(self, query: str) -> ExecutionLog:
         start_time = time.time()
         
@@ -18,6 +26,19 @@ class ExecutionService:
                 query=query,
                 confidence_score=distance,
                 outcome=ExecutionOutcome.NO_MATCH,
+                duration=duration
+            )
+
+        # Verify paths
+        try:
+            self.verify_skill_paths(skill)
+        except Exception as e:
+             duration = time.time() - start_time
+             return ExecutionLog(
+                query=query,
+                skill_id=skill.id,
+                outcome=ExecutionOutcome.FAILURE,
+                steps=[ReACTStep(thought="Initialization", observation=str(e))],
                 duration=duration
             )
 
@@ -34,10 +55,26 @@ class ExecutionService:
 
     async def _execute_simple(self, skill: Skill, query: str) -> ExecutionLog:
         # Load skill prompt and code
+        import yaml
+        
         with open(skill.metadata_path, "r") as f:
-            import yaml
-            metadata = yaml.safe_load(f)
-            prompt_template = metadata.get("prompt", "")
+            content = f.read()
+            
+        metadata = {}
+        if content.startswith("---"):
+            parts = content.split("---", 2)
+            if len(parts) >= 3:
+                try:
+                    metadata = yaml.safe_load(parts[1])
+                except yaml.YAMLError:
+                    # Fallback if frontmatter parsing fails
+                    metadata = yaml.safe_load(content)
+            else:
+                metadata = yaml.safe_load(content)
+        else:
+            metadata = yaml.safe_load(content)
+            
+        prompt_template = metadata.get("prompt", "")
 
         prompt = f"""{prompt_template}
 

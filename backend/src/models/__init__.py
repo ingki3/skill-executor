@@ -41,6 +41,23 @@ class ExecutionLog(BaseModel):
     duration: float
     timestamp: datetime = Field(default_factory=datetime.now)
 
+class SkillDocumentation(BaseModel):
+    skill_id: UUID
+    content: str
+    file_name: str
+
 class SkillRegistry(BaseModel):
     skills: List[Skill] = []
     last_updated: datetime = Field(default_factory=datetime.now)
+
+from .registration import (
+    RiskCategory,
+    RiskSeverity,
+    RiskFinding,
+    SafetyStatus,
+    Judgment,
+    BatchStatus,
+    RegistrationQueueItem,
+    RegistrationBatch,
+    GitHubDeepLink
+)

@@ -3,14 +3,30 @@ import os
 from typing import Optional
 from pathlib import Path
 from datetime import datetime
-from src.models import Skill, SkillRegistry
+from src.models import Skill, SkillRegistry, SkillDocumentation
 from src.core.vector_store import vector_store
 
 class RegistryService:
     def __init__(self, registry_path: str = ".skills/registry.json"):
         self.registry_path = Path(registry_path)
+        self.verify_volumes()
         self.registry_path.parent.mkdir(parents=True, exist_ok=True)
         self._load_registry()
+
+    def verify_volumes(self):
+        """Verify that necessary volumes are mounted and writable."""
+        required_volumes = [".skills", ".skill-executor-data", ".temp_skills"]
+        for vol in required_volumes:
+            path = Path(vol)
+            if not path.exists():
+                print(f"Warning: Volume {vol} does not exist. Creating it.")
+                path.mkdir(parents=True, exist_ok=True)
+            
+            # Check writability
+            if not os.access(path, os.W_OK):
+                print(f"Error: Volume {vol} is not writable.")
+            else:
+                print(f"Volume {vol} is verified and writable.")
 
     def _load_registry(self):
         if self.registry_path.exists():
@@ -48,6 +64,30 @@ class RegistryService:
         for skill in self.registry.skills:
             if str(skill.id) == skill_id:
                 return skill
+        return None
+
+    def read_documentation(self, skill_id: str) -> Optional[SkillDocumentation]:
+        skill = self.get_skill(skill_id)
+        if not skill:
+            return None
+            
+        try:
+            # metadata_path should be relative to workspace root or absolute
+            # We assume it is a valid path string that can be resolved
+            skill_dir = Path(skill.metadata_path).parent
+            
+            for filename in ["SKILL.md", "skill.md"]:
+                doc_path = skill_dir / filename
+                if doc_path.exists():
+                    content = doc_path.read_text(encoding="utf-8")
+                    return SkillDocumentation(
+                        skill_id=skill.id,
+                        content=content,
+                        file_name=filename
+                    )
+        except Exception as e:
+            print(f"Error reading documentation for skill {skill_id}: {e}")
+            
         return None
 
     def list_skills(self) -> SkillRegistry:
