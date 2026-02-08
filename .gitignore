@@ -37,7 +37,10 @@ Thumbs.db
 
 # Project Specific
 .skills/
+.pending_registrations/
 .gemini/
 .specify/
 tests/
 specs/
+.skill-executor-data/
+.temp_skills/
