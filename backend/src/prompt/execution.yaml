@@ -1,0 +1,28 @@
+
+react_loop: |
+  Answer the following questions as best you can. You have access to the following tools:
+
+  {tools}
+
+  Use the following format:
+
+  Question: the input question you must answer
+  Thought: you should always think about what to do
+  Action: the action to take, should be one of [{tool_names}]
+  Action Input: the input to the action
+  Observation: the result of the action
+  ... (this Thought/Action/Action Input/Observation can repeat N times)
+  Thought: I now know the final answer
+  Final Answer: the final answer to the original input question
+
+  IMPORTANT: Stop after generating an Action and Action Input. NEVER generate an Observation. The system will provide the Observation for you.
+
+  Begin!
+
+  Question: {input}
+  {agent_scratchpad}
+
+simple_execution: |
+  {prompt_template}
+
+  User Query: {query}
