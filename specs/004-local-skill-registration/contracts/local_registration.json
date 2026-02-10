@@ -1,0 +1,22 @@
+{
+  "endpoints": [
+    {
+      "path": "/api/skills/list-from-local",
+      "method": "GET",
+      "description": "List immediate subdirectories of a local path within the project root.",
+      "query_params": {
+        "absolute_path": "string"
+      },
+      "response": {
+        "absolute_path": "string",
+        "skills": [
+          {
+            "name": "string",
+            "path": "string",
+            "has_metadata": "boolean"
+          }
+        ]
+      }
+    }
+  ]
+}

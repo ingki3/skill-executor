@@ -1,0 +1,19 @@
+{
+  "endpoint": "/api/skills/{id}/documentation",
+  "method": "GET",
+  "path_params": {
+    "id": "uuid"
+  },
+  "response": {
+    "status": "success",
+    "data": {
+      "skill_id": "uuid",
+      "content": "string",
+      "file_name": "string"
+    }
+  },
+  "errors": {
+    "404": "Documentation file not found",
+    "500": "Internal server error reading file"
+  }
+}

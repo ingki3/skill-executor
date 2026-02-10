@@ -1,0 +1,15 @@
+{
+  "endpoint": "/api/registration/list-skills",
+  "method": "GET",
+  "query_params": {
+    "repo_url": "string"
+  },
+  "response": {
+    "skills": [
+      {
+        "path": "string",
+        "name": "string"
+      }
+    ]
+  }
+}

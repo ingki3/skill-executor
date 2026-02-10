@@ -1,0 +1,55 @@
+{
+  "endpoints": [
+    {
+      "path": "/api/skills/register-batch",
+      "method": "POST",
+      "description": "Start a bulk registration process with security scanning.",
+      "request": {
+        "repo_url": "string",
+        "selected_paths": ["string"]
+      },
+      "response": {
+        "batch_id": "uuid"
+      }
+    },
+    {
+      "path": "/api/skills/registration-batches/{id}",
+      "method": "GET",
+      "description": "Get the status and findings of a registration batch.",
+      "response": {
+        "id": "uuid",
+        "status": "SCANNING|REVIEW_REQUIRED|COMPLETED",
+        "items": [
+          {
+            "name": "string",
+            "path": "string",
+            "safety_status": "SCANNING|SAFE|RISKY|FAILED",
+            "risk_findings": [],
+            "judgment": "PENDING|APPROVED|REJECTED",
+            "code_content": "string"
+          }
+        ]
+      }
+    },
+    {
+      "path": "/api/skills/registration-batches/{id}/judge",
+      "method": "POST",
+      "description": "Approve or reject a specific item in a batch.",
+      "request": {
+        "path": "string",
+        "judgment": "APPROVED|REJECTED"
+      },
+      "response": {
+        "status": "success"
+      }
+    },
+    {
+      "path": "/api/skills/registration-batches/{id}/approve-all-safe",
+      "method": "POST",
+      "description": "Approve all items in the batch that are marked as SAFE.",
+      "response": {
+        "approved_count": "number"
+      }
+    }
+  ]
+}
