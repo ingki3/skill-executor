@@ -20,6 +20,12 @@ app.add_middleware(
 async def health_check():
     return {"status": "healthy", "version": "1.0.0"}
 
+@app.on_event("startup")
+async def startup_event():
+    from src.services.session_registry import session_registry
+    import asyncio
+    asyncio.create_task(session_registry.start_cleanup_task())
+
 from src.api.registration_router import router as registration_router
 from src.api.execution_router import router as execution_router
 app.include_router(registration_router)

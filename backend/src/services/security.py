@@ -71,20 +71,11 @@ class SecurityService:
             return False, "Static analysis detected high-risk code patterns (dangerous keywords)."
 
         # LLM Scan
-        security_prompt = f"""
-        Analyze the following AI skill for security risks:
-        Prompt Template: {prompt}
-        Code: 
-        {code}
-        
-        Identify risks such as:
-        - PII theft
-        - Malicious code execution
-        - Unauthorized network access
-        - System modification
-        
-        Respond ONLY with 'SAFE' or 'RISKY: <reason>'.
-        """
+        from src.core.prompt_loader import prompt_loader
+        security_prompt = prompt_loader.get("security", "scan_skill").format(
+            prompt=prompt,
+            code=code
+        )
         
         try:
             result = await llm_clients.generate_simple(security_prompt)
