@@ -1,0 +1,17 @@
+{
+  "endpoint": "/api/registration/github",
+  "method": "POST",
+  "request": {
+    "repo_url": "string",
+    "selected_paths": ["string"]
+  },
+  "response": {
+    "status": "success|failed",
+    "registered_skills": [
+      {
+        "id": "uuid",
+        "name": "string"
+      }
+    ]
+  }
+}
