@@ -13,9 +13,13 @@ import {
   ListItem,
   ListItemText,
   Divider,
-  Chip
+  Chip,
+  FormControlLabel,
+  Switch
 } from '@mui/material';
-import { skillApi, type Skill, type ExecutionLog } from '../services/api';
+import { useNavigate } from 'react-router-dom';
+import { type Skill, type ExecutionLog } from '../services/api';
+import { startExecution } from '../services/execution_api';
 
 interface Props {
   skill: Skill | null;
@@ -23,21 +27,30 @@ interface Props {
 }
 
 const ExecutionDialog: React.FC<Props> = ({ skill, onClose }) => {
+  const navigate = useNavigate();
   const [query, setQuery] = useState('');
   const [executing, setExecuting] = useState(false);
+  const [hitlEnabled, setHitlEnabled] = useState(true);
   const [result, setResult] = useState<ExecutionLog | null>(null);
   const [error, setError] = useState<string | null>(null);
 
   const handleRun = async () => {
-    if (!query) return;
+    if (!query || !skill) return;
     setExecuting(true);
     setError(null);
     setResult(null);
     try {
-      const response = await skillApi.executeSkill(query);
-      setResult(response.data);
+      const response = await startExecution({
+        skill_id: skill.id,
+        input: query,
+        mode: hitlEnabled ? 'HITL' : 'AUTONOMOUS'
+      });
+      
+      // Redirect to the execution dashboard for the new session
+      navigate(`/execution/${response.session_id}`);
+      onClose();
     } catch (err: any) {
-      setError(err.response?.data?.detail || 'Execution failed');
+      setError(err.message || 'Execution failed');
     } finally {
       setExecuting(false);
     }
@@ -58,6 +71,17 @@ const ExecutionDialog: React.FC<Props> = ({ skill, onClose }) => {
             onChange={(e) => setQuery(e.target.value)}
             disabled={executing}
             placeholder="e.g., Check my unread emails"
+          />
+          <FormControlLabel
+            control={
+              <Switch 
+                checked={hitlEnabled} 
+                onChange={(e) => setHitlEnabled(e.target.checked)} 
+                disabled={executing}
+              />
+            }
+            label="Human-in-the-Loop (HITL) Mode"
+            sx={{ mt: 1 }}
           />
         </Box>
 

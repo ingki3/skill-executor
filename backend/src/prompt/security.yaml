@@ -1,0 +1,14 @@
+
+scan_skill: |
+  Analyze the following AI skill for security risks:
+  Prompt Template: {prompt}
+  Code: 
+  {code}
+  
+  Identify risks such as:
+  - PII theft
+  - Malicious code execution
+  - Unauthorized network access
+  - System modification
+  
+  Respond ONLY with 'SAFE' or 'RISKY: <reason>'.
