@@ -11,18 +11,22 @@ class LLMClients:
         if api_key:
             genai.configure(api_key=api_key)
         
+        # Get model names from environment variables
+        simple_model_name = os.getenv("MODEL", "gemini-3-flash-preview")
+        advanced_model_name = os.getenv("ADVANCED_MODEL", "gemini-2.5-pro")
+
         # Raw SDK models (kept for compatibility)
-        self.flash_model = genai.GenerativeModel('gemini-3-flash-preview')
-        self.pro_model = genai.GenerativeModel('gemini-3-pro-preview')
+        self.flash_model = genai.GenerativeModel(simple_model_name)
+        self.pro_model = genai.GenerativeModel(advanced_model_name)
 
         # LangChain Chat models
         self.simple_model = ChatGoogleGenerativeAI(
-            model="gemini-3-flash-preview",
+            model=simple_model_name,
             google_api_key=api_key,
             temperature=0
         )
         self.advanced_model = ChatGoogleGenerativeAI(
-            model="gemini-3-pro-preview",
+            model=advanced_model_name,
             google_api_key=api_key,
             temperature=0
         )

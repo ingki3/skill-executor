@@ -28,8 +28,10 @@ async def startup_event():
 
 from src.api.registration_router import router as registration_router
 from src.api.execution_router import router as execution_router
+from src.api.tools import router as tools_router
 app.include_router(registration_router)
 app.include_router(execution_router)
+app.include_router(tools_router)
 
 if __name__ == "__main__":
     import uvicorn

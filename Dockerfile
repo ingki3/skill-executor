@@ -9,6 +9,7 @@ RUN npm run build
 # Stage 2: Backend Runtime
 FROM python:3.12-slim AS backend-runtime
 WORKDIR /app
+ENV PYTHONUNBUFFERED=1
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y --no-install-recommends \
@@ -40,5 +41,6 @@ RUN npm install -g serve
 
 # Entrypoint script
 COPY scripts/entrypoint.sh /app/scripts/entrypoint.sh
+RUN chmod +x /app/scripts/entrypoint.sh
 WORKDIR /app
 CMD ["./scripts/entrypoint.sh"]

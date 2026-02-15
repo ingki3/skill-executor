@@ -21,6 +21,10 @@ Auto-generated from all feature plans. Last updated: 2026-02-06
 - FAISS (Vector Store), JSON/YAML (Local Registry), In-memory Session Registry (009-hitl-execution-mode)
 - Python 3.12 (Managed by `uv`) + FastAPI (Backend), PyYAML (YAML parsing), Pydantic (Validation) (010-separate-prompt-yaml)
 - Local Filesystem (`backend/src/prompt/*.yaml`) (010-separate-prompt-yaml)
+- Python 3.12 (Managed by `uv`) + FastAPI (Backend), LangChain (Agent Orchestration), `mcp` Python SDK (MCP Client) (011-mcp-tool-support)
+- JSON for tool registry (`tools.json`, `mcp.json`), Local Filesystem for tool scripts (`backend/src/tools/`) (011-mcp-tool-support)
+- Python 3.12 (Managed by `uv`) + FastAPI (Backend), LangChain (Agent Orchestration), `mcp` Python SDK (MCP Client), `pydantic` (Validation) (011-mcp-tool-support)
+- JSON for tool registry (`tools.json`, `mcp.json`), Local Filesystem for tool scripts (`backend/src/tools/`), FAISS (Vector Store) (011-mcp-tool-support)
 
 - Python 3.12 (Managed by `uv`) + FastAPI (Backend), React + Tailwind CSS (Frontend), FAISS (Vector DB), `gitpython` (GitHub integration) (001-skill-executor-agent)
 
@@ -40,9 +44,9 @@ cd src [ONLY COMMANDS FOR ACTIVE TECHNOLOGIES][ONLY COMMANDS FOR ACTIVE TECHNOLO
 Python 3.12 (Managed by `uv`): Follow standard conventions
 
 ## Recent Changes
+- 011-mcp-tool-support: Added Python 3.12 (Managed by `uv`) + FastAPI (Backend), LangChain (Agent Orchestration), `mcp` Python SDK (MCP Client), `pydantic` (Validation)
+- 011-mcp-tool-support: Added Python 3.12 (Managed by `uv`) + FastAPI (Backend), LangChain (Agent Orchestration), `mcp` Python SDK (MCP Client)
 - 010-separate-prompt-yaml: Added Python 3.12 (Managed by `uv`) + FastAPI (Backend), PyYAML (YAML parsing), Pydantic (Validation)
-- 009-hitl-execution-mode: Added Python 3.12 (Managed by `uv`) + FastAPI (Backend), React + Tailwind CSS (Frontend), LangChain (Agent Memory)
-- 009-hitl-execution-mode: Added Python 3.12 (Managed by `uv`) + FastAPI (Backend), React + Tailwind CSS (Frontend), LangChain (Agent Memory), FAISS (Vector Store)
 
 
 <!-- MANUAL ADDITIONS START -->

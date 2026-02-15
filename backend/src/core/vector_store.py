@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class VectorStore:
-    def __init__(self, dimension: int = 768): # Default for embedding-001 is 768
+    def __init__(self, dimension: int = 3072): # Default for gemini-embedding-001 is 3072
         self.dimension = dimension
         self.index = faiss.IndexFlatL2(dimension)
         self.skill_ids: List[str] = []
@@ -20,7 +20,7 @@ class VectorStore:
     def get_embedding(self, text: str) -> np.ndarray:
         try:
             result = genai.embed_content(
-                model="models/embedding-001",
+                model="models/gemini-embedding-001",
                 content=text,
                 task_type="retrieval_document"
             )
@@ -32,6 +32,7 @@ class VectorStore:
 
     def add_skill(self, skill_id: str, text: str):
         embedding = self.get_embedding(text)
+        print(f"DEBUG: Index dim: {self.dimension}, Embedding dim: {len(embedding)}")
         self.index.add(np.array([embedding]))
         self.skill_ids.append(skill_id)
 

@@ -1,0 +1,56 @@
+{
+  "tools": [
+    {
+      "name": "web_search",
+      "description": "Search the web for real-time information and current events. Use this when the user asks for info not in your training data.",
+      "type": "local",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "query": { "type": "string" }
+        },
+        "required": ["query"]
+      },
+      "config": {
+        "script_path": "web_search.py",
+        "entrypoint": "run"
+      },
+      "timeout": 30
+    },
+    {
+      "name": "request_human_input",
+      "description": "Ask the human user for additional information, clarification, or missing details. Use this when you cannot proceed without more input from the user.",
+      "type": "local",
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "question": { "type": "string" }
+        },
+        "required": ["question"]
+      },
+      "config": {
+        "script_path": "request_human_input.py",
+        "entrypoint": "run"
+      },
+      "timeout": 60
+    },
+    {
+      "name": "code_execution",
+      "description": "Execute Python code snippets. Use this for complex calculations, data processing, or when you need to perform system tasks. Returns stdout and stderr.",
+      "type": "local",
+      "parallel_capable": true,
+      "input_schema": {
+        "type": "object",
+        "properties": {
+          "code": { "type": "string" }
+        },
+        "required": ["code"]
+      },
+      "config": {
+        "script_path": "code_execution.py",
+        "entrypoint": "run"
+      },
+      "timeout": 10
+    }
+  ]
+}
