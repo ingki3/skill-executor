@@ -97,7 +97,11 @@ class ExecutionService:
             return
 
         # 2. Setup Tools (Always include RequestInputTool for HITL)
-        tools = [RequestInputTool()]
+        from src.services.tool_service import ToolService
+        tool_service = ToolService()
+        await tool_service.load_registry()
+        
+        tools = [RequestInputTool()] + tool_service.get_langchain_tools()
         
         # 3. Choose LLM based on Complexity
         if skill.complexity == Complexity.COMPLEX:

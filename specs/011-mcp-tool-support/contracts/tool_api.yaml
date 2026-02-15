@@ -1,0 +1,80 @@
+openapi: 3.0.0
+info:
+  title: Tool Management API
+  version: 1.0.0
+paths:
+  /tools:
+    get:
+      summary: List all registered tools
+      responses:
+        '200':
+          description: List of tools
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ToolDefinition'
+  /tools/local:
+    post:
+      summary: Register a new local script tool
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LocalToolRegistration'
+      responses:
+        '201':
+          description: Tool registered
+  /tools/mcp:
+    post:
+      summary: Register a new MCP server
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MCPToolRegistration'
+      responses:
+        '201':
+          description: MCP server registered
+  /tools/{name}:
+    delete:
+      summary: Unregister a tool
+      parameters:
+        - name: name
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Tool removed
+
+components:
+  schemas:
+    ToolDefinition:
+      type: object
+      properties:
+        name: { type: string }
+        description: { type: string }
+        type: { type: string, enum: [local, mcp] }
+        parallel_capable: { type: boolean }
+        input_schema: { type: object }
+    LocalToolRegistration:
+      type: object
+      required: [name, description, script_path]
+      properties:
+        name: { type: string }
+        description: { type: string }
+        script_path: { type: string }
+        parallel_capable: { type: boolean }
+    MCPToolRegistration:
+      type: object
+      required: [server_name, command, args]
+      properties:
+        server_name: { type: string }
+        command: { type: string }
+        args: { type: array, items: { type: string } }
+        env: { type: object }

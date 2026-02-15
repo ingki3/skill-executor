@@ -1,4 +1,29 @@
 {
-  "skills": [],
-  "last_updated": "2026-02-07T23:32:45.652946"
+  "skills": [
+    {
+      "id": "19897a99-6019-442e-93ea-3cacb736c6a7",
+      "name": "Compound Interest Calculator",
+      "description": "Calculates compound interest based on principal, rate, and time using Python code.",
+      "metadata_path": ".skills/compound-interest-calculator/SKILL.md",
+      "code_path": ".skills/compound-interest-calculator/SKILL.md",
+      "complexity": "COMPLEX",
+      "version": "1.0.0",
+      "source_url": "local",
+      "last_synced": "2026-02-16T00:03:27.124840",
+      "created_at": "2026-02-16T00:03:27.124843"
+    },
+    {
+      "id": "4c7af1d0-2f3c-44aa-b026-685497c0944b",
+      "name": "Compound Interest Calculator",
+      "description": "Calculates compound interest based on principal, rate, and time using Python code.",
+      "metadata_path": ".skills/compound-interest-calculator/SKILL.md",
+      "code_path": ".skills/compound-interest-calculator/SKILL.md",
+      "complexity": "COMPLEX",
+      "version": "1.0.0",
+      "source_url": "local",
+      "last_synced": "2026-02-16T00:04:18.188134",
+      "created_at": "2026-02-16T00:04:18.188146"
+    }
+  ],
+  "last_updated": "2026-02-16T00:04:18.188191"
 }
