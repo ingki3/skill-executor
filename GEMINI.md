@@ -46,4 +46,8 @@ Python 3.12 (Managed by `uv`): Follow standard conventions
 
 
 <!-- MANUAL ADDITIONS START -->
+## Git Repository Policy
+- **Sync**: `main` branch should be periodically synchronized into `dev`.
+- **Feature Branches**: All feature branches must be merged into `dev` only.
+- **Main Merge**: Merges into `main` must only come from the `dev` branch.
 <!-- MANUAL ADDITIONS END -->
